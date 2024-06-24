@@ -99,12 +99,12 @@ def create_structure(structure, root_path='.'):
 
             if content:
                 os.makedirs(os.path.dirname(current_path), exist_ok=True)
-                with open(current_path, 'w') as file:
+                with open(current_path, 'w', errors='ignore') as file:
                     file.write(content)
                 print(f"Created {current_path} with appropriate content.")
             elif file_extension:  # It's a file but no default content
                 os.makedirs(os.path.dirname(current_path), exist_ok=True)
-                open(current_path, 'w').close()
+                open(current_path, 'w', errors='ignore').close()
                 print(f"Created empty file {current_path}.")
             else:  # It's a directory
                 os.makedirs(current_path, exist_ok=True)
@@ -120,7 +120,7 @@ def write_to_file(filename,copy_mem):
         return
 
     try:
-        with open(filename, 'w') as file:
+        with open(filename, 'w', errors='ignore') as file:
             for content in copy_mem:
                 print(extract_code(content))
                 file.write(extract_code(content))

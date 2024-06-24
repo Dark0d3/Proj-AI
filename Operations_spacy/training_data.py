@@ -269,6 +269,9 @@ TRAIN_DATA = [
     ("How do you perform server-side rendering with a React application?", {"cats": {"COMMAND": 0.0, "NOTACOMMAND": 1.0, "READ":0.0, "DOCUMENTATION": 0.0}}),
     ("What strategies can you use to handle SEO in Vue.js applications?", {"cats": {"COMMAND": 0.0, "NOTACOMMAND": 1.0, "READ":0.0, "DOCUMENTATION": 0.0}}),
     ("How does React's new Hooks feature compare to Vue.js composition API?", {"cats": {"COMMAND": 0.0, "NOTACOMMAND": 1.0, "READ":0.0, "DOCUMENTATION": 0.0}}),
+    ("who are you", {"cats": {"COMMAND": 0.0, "NOTACOMMAND": 1.0, "READ":0.0, "DOCUMENTATION": 0.0}}),
+    ("what are you", {"cats": {"COMMAND": 0.0, "NOTACOMMAND": 1.0, "READ":0.0, "DOCUMENTATION": 0.0}}),
+    ("who created you", {"cats": {"COMMAND": 0.0, "NOTACOMMAND": 1.0, "READ":0.0, "DOCUMENTATION": 0.0}}),
 
     ("Read the file startup.cs", {"cats": {"COMMAND": 0.0, "NOTACOMMAND": 0.0, "READ":1.0, "DOCUMENTATION": 0.0}}),
     ("Read the file program.cs", {"cats": {"COMMAND": 0.0, "NOTACOMMAND": 0.0, "READ":1.0, "DOCUMENTATION": 0.0}}),
