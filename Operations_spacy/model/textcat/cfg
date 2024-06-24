@@ -1,0 +1,10 @@
+{
+  "labels":[
+    "COMMAND",
+    "READ",
+    "DOCUMENTATION",
+    "NOTACOMMAND"
+  ],
+  "threshold":0.0,
+  "positive_label":null
+}
