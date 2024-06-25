@@ -1,6 +1,8 @@
 # Prepare training data
 TRAIN_DATA = [
     ("Create a new file", {"cats": {"COMMAND": 1.0, "NOTACOMMAND": 0.0, "READ":0.0, "DOCUMENTATION": 0.0}}),
+    ("Create a new file startup.cs", {"cats": {"COMMAND": 1.0, "NOTACOMMAND": 0.0, "READ":0.0, "DOCUMENTATION": 0.0}}),
+    ("Create a new file dotnet/startup.cs", {"cats": {"COMMAND": 1.0, "NOTACOMMAND": 0.0, "READ":0.0, "DOCUMENTATION": 0.0}}),
     ("Make a directory", {"cats": {"COMMAND": 1.0, "NOTACOMMAND": 0.0, "READ":0.0, "DOCUMENTATION": 0.0}}),
     ("Delete a file", {"cats": {"COMMAND": 1.0, "NOTACOMMAND": 0.0, "READ":0.0, "DOCUMENTATION": 0.0}}),
     ("Delete a folder", {"cats": {"COMMAND": 1.0, "NOTACOMMAND": 0.0, "READ":0.0, "DOCUMENTATION": 0.0}}),

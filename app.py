@@ -1,17 +1,14 @@
-import sys
-from PyQt5.QtWidgets import (
-    QApplication, QWidget, QLabel, QLineEdit, QPushButton, QTextEdit,
-    QVBoxLayout, QHBoxLayout, QMessageBox, QFileDialog
-)
-import requests
+from PyQt5.QtWidgets import QApplication, QWidget, QLabel, QLineEdit, QPushButton, QTextEdit, QVBoxLayout, QHBoxLayout, QMessageBox, QFileDialog, QProgressDialog
 from PyQt5.QtGui import QIcon
-from PyQt5.QtCore import Qt
+from PyQt5.QtCore import Qt, QTimer
+import requests
 import speech_recognition as sr
 import subprocess
 from api import send_request
 from commands import check_prompt_type, create_structure, extract_code, write_to_file
 import os
 import spacy
+import sys
 
 # Load the trained model
 nlp = spacy.load("FileStructures_spacy/model/")
@@ -82,6 +79,14 @@ class App(QWidget):
 
     def handle_api_response(self, prompt):
         """ Send request to API and handle the response. """
+        progress = QProgressDialog(self)
+        progress.setWindowTitle("Processing")
+        progress.setLabelText("Sending request...")
+        progress.setWindowModality(Qt.WindowModal)
+        progress.setMinimum(0)
+        progress.setMaximum(0)  # Indeterminate progress
+        progress.show()
+
         try:
             response = send_request(prompt)
             if response.status_code == 200:
@@ -93,13 +98,12 @@ class App(QWidget):
                 result = data['response']
                 self.response_text.append(result)
                 if category == "DIRECTORYSTRUCT" and score > 0.5:
-                    structure_create = self.show_yes_no_dialog("Found Directory Structure. Do you want to create?")
-                    if structure_create:
-                        structpath = self.get_directory_path()
-                        if structpath:
-                            code = extract_code(result)
-                            self.response_text.append(f"Created structure: {code}")
-                            create_structure(code, structpath)
+                    progress.setLabelText("Creating structure...")
+                    structpath = self.get_directory_path()
+                    if structpath:
+                        code = extract_code(result)
+                        self.response_text.append(f"Created structure: {code}")
+                        create_structure(code, structpath)
             else:
                 self.response_text.append("Failed to get a valid response from the server.")
         except requests.RequestException as e:
@@ -108,6 +112,8 @@ class App(QWidget):
             self.response_text.append(f"ValueError: {e}")
         except Exception as e:
             self.response_text.append(f"An unexpected error occurred: {e}")
+        finally:
+            progress.close()
 
     def show_yes_no_dialog(self, message):
         reply = QMessageBox.question(self, 'Message', message, QMessageBox.Yes | QMessageBox.No, QMessageBox.No)
@@ -165,6 +171,14 @@ class App(QWidget):
 
     def handle_documentation(self, prompt):
         """ Create documentation for the entire project by appending all code to the prompt and writing to a new file. """
+        progress = QProgressDialog(self)
+        progress.setWindowTitle("Processing")
+        progress.setLabelText("Creating documentation...")
+        progress.setWindowModality(Qt.WindowModal)
+        progress.setMinimum(0)
+        progress.setMaximum(0)  # Indeterminate progress
+        progress.show()
+
         try:
             project_path = self.get_directory_path()
             if not project_path:
@@ -199,9 +213,19 @@ class App(QWidget):
                 self.response_text.append(f"Failed to write to file: {e}")
         except Exception as e:
             self.response_text.append(f"An unexpected error occurred: {e}")
+        finally:
+            progress.close()
 
     def handle_read_task(self, prompt):
         """ Read file specified in the prompt and append its contents to history. """
+        progress = QProgressDialog(self)
+        progress.setWindowTitle("Processing")
+        progress.setLabelText("Reading file...")
+        progress.setWindowModality(Qt.WindowModal)
+        progress.setMinimum(0)
+        progress.setMaximum(0)  # Indeterminate progress
+        progress.show()
+
         try:
             file_path = prompt.split()[-1]
             with open(file_path, 'r', errors='ignore') as file:
@@ -214,6 +238,8 @@ class App(QWidget):
             self.response_text.append(f"File {file_path} not found: {e}")
         except Exception as e:
             self.response_text.append(f"An unexpected error occurred: {e}")
+        finally:
+            progress.close()
 
     def handle_default(self, prompt):
         """ Default handler for unrecognized categories. """
