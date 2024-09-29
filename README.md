@@ -1,4 +1,4 @@
-AI-Powered Project Assistant
+AI-Powered Project Assistant (Prototype)
 
 A desktop application developed for an AI hackathon, leveraging local LLM capabilities with Llama and Ollama. This tool assists developers with various tasks including:
 
